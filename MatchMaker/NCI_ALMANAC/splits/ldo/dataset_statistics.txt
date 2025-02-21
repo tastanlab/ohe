@@ -1,0 +1,13 @@
+Repeat 1: Total Samples = 93139
+Repeat 2: Total Samples = 92831
+Repeat 3: Total Samples = 94223
+Repeat 4: Total Samples = 92215
+Repeat 5: Total Samples = 92973
+Repeat 6: Total Samples = 92529
+Repeat 7: Total Samples = 94169
+Repeat 8: Total Samples = 94842
+Repeat 9: Total Samples = 93271
+Repeat 10: Total Samples = 92287
+
+Average Samples: 93247.90
+Standard Deviation: 843.16
