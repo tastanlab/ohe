@@ -13,7 +13,7 @@ from sklearn.metrics import mean_squared_error
 import numpy as np
 
 # Load main dataset
-data = pd.read_csv('/MARSY/data/output_ohe.csv').to_numpy()
+data = pd.read_csv('/MARSY/data/ohe_dataset.csv').to_numpy()
 data_targets = pd.read_csv('/MARSY/data/data.csv')
 
 targets = data_targets[['Ri1', 'Ri2', 'Synergy_Zip']].to_numpy()

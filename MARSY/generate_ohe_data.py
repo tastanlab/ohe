@@ -18,6 +18,5 @@ df_ohe.drop(columns=['Drug1_PC3', 'Drug1_MCF7', 'Drug2_PC3', 'Drug2_MCF7', 'Cell
 
 print(df_ohe.head())
 # Save the result to a CSV file
-df_ohe.to_csv('/MARSY/data/output_ohe.csv', index=False)
+df_ohe.to_csv('/MARSY/data/ohe_dataset.csv', index=False)
 
-print("One-hot encoded data saved to output_ohe.csv")
