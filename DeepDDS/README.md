@@ -11,9 +11,9 @@
 
 The architecture of the DeepDDS model is shown below:
 
-![DeepDDS Architecture](../figures/arch_deepdds.jpeg)  
+![DeepDDS Architecture](../figures/deepdds.png)  
 
-*Figure 1: Architecture of DeepDDS*
+*Figure 1: Architecture of DeepDDS, inspired by Wang et al. (2021)*
 
 ---
 
@@ -23,7 +23,7 @@ DeepDDS was trained on the **O'Neil** dataset using **Leave-Triple-Out (LTO)** s
 
 In one-hot encoded feature experiments, the molecular graph module and cell line MLP were excluded, as shown in **Figure 2**:
 
-![DeepDDS Architecture 2](../figures/drug1_ohe_feature_drug2_ohe_feature.png)  
+![DeepDDS Architecture 2](../figures/deepdds_ohe.png)  
 
 *Figure 2: Architecture of DeepDDS for training with one hot encoded features*
 
