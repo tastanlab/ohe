@@ -19,7 +19,7 @@ The architecture of the DeepSynergy model is shown below:
 
 ## Dataset and Splitting Information
 
-DeepSynergy was trained on the **O'Neil** dataset using **Leave-Pair-Out (LPO)** splits and 5-fold cross-validation. The dataset, splits, and hyperparameters were provided by the authors.
+DeepSynergy was trained on the **O'Neil** dataset using **Leave-Pair-Out (LPO)** splits and 5-fold nested cross-validation. The dataset, splits, and hyperparameters were provided by the authors.
 
 ---
 
@@ -39,12 +39,13 @@ DeepSynergy was trained on the **O'Neil** dataset using **Leave-Pair-Out (LPO)**
 - **Cell Line Features**:
   - **Gene expression profiles**: 3984 genetic features.
 
-- Preprocessed data file: `data_test_fold0_tanh.p.gz` (includes all drug and cell line features for DeepSynergy experiments).
+- You can download preprocessed data files from [here](https://drive.google.com/file/d/1c-2iriiLSkKdNZWj0kHfO3TljFuPF0wF/view?usp=sharing) (includes all drug and cell line features for DeepSynergy experiments).
 
 #### One-Hot Encoded Features
-- `one_hot_encoded/ohe_data_test_fold0.p`: Contains one-hot encoded representations for both drugs and cell lines.
-
-> Note: You can generate `ohe_data_test_fold0.p` using the provided `generate_ohe_data.py` script under the `one_hot_encoded/`folder.
+- `OHEData/ohe_data_test_foldX_val_foldY.p`: Contains one-hot encoded representations for both drugs and cell lines.
+  - test_foldX indicates the test set fold.
+  - val_foldY indicates the validation set fold.
+> Note: You can generate `ohe_data_test_foldX_val_foldY.p` using the provided `generate_ohe_data.py` script under the `one_hot_encoded/`folder.
 
 
 ---
@@ -57,7 +58,7 @@ python deepsynergy.py
 ### Training DeepSynergy with One-Hot Encoded Features
 
 ```bash
-python one_hot_encoded/deepsynergy_ohe.py
+python deepsynergy_ohe.py
 ```
 
 ## Reproducing Experiments
