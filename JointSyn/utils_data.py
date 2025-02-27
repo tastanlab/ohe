@@ -20,9 +20,9 @@ def split(data, repeat):
         data_train = data_train.reset_index(drop=True)
         data_val = data_val.reset_index(drop=True)
         data_test = data_test.reset_index(drop=True)
-        path_train = '/cta/users/ebcandir/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_fold'+str(i)+'_train.csv'
-        path_val = '/cta/users/ebcandir/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_fold'+str(i)+'_val.csv'
-        path_test = '/cta/users/ebcandir/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_fold'+str(i)+'_test.csv'
+        path_train = '/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_fold'+str(i)+'_train.csv'
+        path_val = '/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_fold'+str(i)+'_val.csv'
+        path_test = '/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_fold'+str(i)+'_test.csv'
         i += 1
         print(path_train)
         data_train.to_csv(path_train)

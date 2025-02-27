@@ -47,7 +47,7 @@ def prepare_data(chem1, chem2, cell_line, synergies, norm, train_ind_fname, val_
 
 
     # Remove any matching index
-    matching_indices = list(np.loadtxt("/cta/users/ebcandir/matchmaker/data/drugcomb2/moa_matching_indices.txt", dtype=int))
+    matching_indices = list(np.loadtxt("/matchmaker/data/drugcomb2/moa_matching_indices.txt", dtype=int))
     test_ind  = [idx for idx in test_ind  if idx not in matching_indices]
     val_ind   = [idx for idx in val_ind   if idx not in matching_indices]
     train_ind = [idx for idx in train_ind if idx not in matching_indices]

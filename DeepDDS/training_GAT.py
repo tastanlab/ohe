@@ -87,8 +87,8 @@ else:
     device = torch.device('cpu')
     print('The code uses CPU!!!')
 
-drug1_data = TestbedDataset(root='/cta/users/ebcandir/DeepDDs/data', dataset=datafile + '_drug1')
-drug2_data = TestbedDataset(root='/cta/users/ebcandir/DeepDDs/data', dataset=datafile + '_drug2')
+drug1_data = TestbedDataset(root='/DeepDDs/data', dataset=datafile + '_drug1')
+drug2_data = TestbedDataset(root='/DeepDDs/data', dataset=datafile + '_drug2')
 print("drug1_data",drug1_data)
 lenth = len(drug1_data)
 pot = int(lenth/5)
@@ -101,8 +101,8 @@ for i in range(5):
     #test_num = random_num[pot*i:pot*(i+1)]
     #train_num = random_num[:pot*i] + random_num[pot*(i+1):]
 
-    train_ind = list(np.loadtxt("/cta/users/ebcandir/DeepDDs/data/train_indices_fold_" + str(i + 1) +".txt",dtype=int))
-    test_ind = list(np.loadtxt("/cta/users/ebcandir/DeepDDs/data/test_indices_fold_" + str(i + 1) +".txt",dtype=int))
+    train_ind = list(np.loadtxt("/DeepDDs/data/train_indices_fold_" + str(i + 1) +".txt",dtype=int))
+    test_ind = list(np.loadtxt("/DeepDDs/data/test_indices_fold_" + str(i + 1) +".txt",dtype=int))
 
     drug1_data_train = drug1_data[train_ind]
     drug1_data_test = drug1_data[test_ind]
@@ -120,9 +120,9 @@ for i in range(5):
     optimizer = torch.optim.Adam(model.parameters(), lr=LR)
 
 
-    model_file_name = '/cta/users/ebcandir/DeepDDs/data/result/GATNet(DrugA_DrugB)' + str(i) + '--model_' + datafile +  '.model'
-    result_file_name = '/cta/users/ebcandir/DeepDDs/data/result/GATNet(DrugA_DrugB)' + str(i) + '--result_' + datafile + '.csv'
-    file_AUCs = '/cta/users/ebcandir/DeepDDs/data/result/GATNet(DrugA_DrugB)' + str(i) + '--AUCs--' + datafile + '.txt'
+    model_file_name = '/DeepDDs/data/result/GATNet(DrugA_DrugB)' + str(i) + '--model_' + datafile +  '.model'
+    result_file_name = '/DeepDDs/data/result/GATNet(DrugA_DrugB)' + str(i) + '--result_' + datafile + '.csv'
+    file_AUCs = '/DeepDDs/data/result/GATNet(DrugA_DrugB)' + str(i) + '--AUCs--' + datafile + '.txt'
     AUCs = ('Epoch\tAUC_dev\tPR_AUC\tACC\tBACC\tPREC\tTPR\tKAPPA\tRECALL')
     with open(file_AUCs, 'w') as f:
         f.write(AUCs + '\n')

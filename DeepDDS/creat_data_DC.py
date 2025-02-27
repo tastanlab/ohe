@@ -74,7 +74,7 @@ def creat_data(datafile, cellfile):
     print('cell_features', cell_features)
 
     compound_iso_smiles = []
-    df = pd.read_csv('/cta/users/ebcandir/DeepDDs/data/smiles.csv')
+    df = pd.read_csv('/DeepDDs/data/smiles.csv')
     compound_iso_smiles += list(df['smile'])
     compound_iso_smiles = set(compound_iso_smiles)
     smile_graph = {}
@@ -86,17 +86,17 @@ def creat_data(datafile, cellfile):
 
     datasets = datafile
     # convert to PyTorch data format
-    processed_data_file_train = '/cta/users/ebcandir/DeepDDs/data/processed/' + datasets + '_train.pt'
+    processed_data_file_train = '/DeepDDS/data/processed/' + datasets + '_train.pt'
 
     if ((not os.path.isfile(processed_data_file_train))):
-        df = pd.read_csv('/cta/users/ebcandir/DeepDDs/data/' + datasets + '.csv')
+        df = pd.read_csv('/DeepDDs/data/' + datasets + '.csv')
         drug1, drug2, cell, label = list(df['drug1']), list(df['drug2']), list(df['cell']), list(df['label'])
         drug1, drug2, cell, label = np.asarray(drug1), np.asarray(drug2), np.asarray(cell), np.asarray(label)
         # make data PyTorch Geometric ready
 
         print('开始创建数据')
-        TestbedDataset(root='/cta/users/ebcandir/DeepDDs/data', dataset=datafile + '_drug1', xd=drug1, xt=cell, xt_featrue=cell_features, y=label,smile_graph=smile_graph)
-        TestbedDataset(root='/cta/users/ebcandir/DeepDDs/data', dataset=datafile + '_drug2', xd=drug2, xt=cell, xt_featrue=cell_features, y=label,smile_graph=smile_graph)
+        TestbedDataset(root='/DeepDDS/data', dataset=datafile + '_drug1', xd=drug1, xt=cell, xt_featrue=cell_features, y=label,smile_graph=smile_graph)
+        TestbedDataset(root='/DeepDDS/data', dataset=datafile + '_drug2', xd=drug2, xt=cell, xt_featrue=cell_features, y=label,smile_graph=smile_graph)
         print('创建数据成功')
         print('preparing ', datasets + '_.pt in pytorch format!')
     #
@@ -107,7 +107,7 @@ def creat_data(datafile, cellfile):
 
 if __name__ == "__main__":
     # datafile = 'prostate'
-    cellfile = '/cta/users/ebcandir/DeepDDs/data/new_cell_features_954.csv'
+    cellfile = '/DeepDDS/data/new_cell_features_954.csv'
     da = ['new_labels_0_10']
     for datafile in da:
         creat_data(datafile, cellfile)

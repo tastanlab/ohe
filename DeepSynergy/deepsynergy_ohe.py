@@ -40,8 +40,8 @@ if tf.config.list_physical_devices('GPU'):
         print(e)
 
 
-hyperparameter_file = '/cta/users/ebcandir/DeepSynergy/hyperparameters.txt' # textfile which contains the hyperparameters of the model
-data_file = f'/cta/users/ebcandir/DeepSynergy/ohe_data_test_fold{args.test}_val_fold{args.val}.p' # pickle file which contains the one hot encoded feature data (produced with generate_one_hot_encoded_feature.ipynb)
+hyperparameter_file = '/DeepSynergy/hyperparameters.txt' # textfile which contains the hyperparameters of the model
+data_file = f'/DeepSynergy/ohe_data_test_fold{args.test}_val_fold{args.val}.p' # pickle file which contains the one hot encoded feature data (produced with generate_one_hot_encoded_feature.ipynb)
 
 def moving_average(a, n=3):
     ret = np.cumsum(a, dtype=float)
@@ -109,8 +109,8 @@ def mse(y, pred):
 
 
 
-np.savetxt(f'/cta/users/ebcandir/DeepSynergy/ohe_pred_test{args.test}_val{args.val}.txt', np.asarray(pred), delimiter=",")
-np.savetxt(f'/cta/users/ebcandir/DeepSynergy/ohe_y_test{args.test}_val{args.val}.txt', np.asarray(y_test), delimiter=",")
+np.savetxt(f'/DeepSynergy/ohe_pred_test{args.test}_val{args.val}.txt', np.asarray(pred), delimiter=",")
+np.savetxt(f'/DeepSynergy/ohe_y_test{args.test}_val{args.val}.txt', np.asarray(y_test), delimiter=",")
 
 mse_value = mse(y_test, pred)
 spearman_value = spearman(y_test, pred)

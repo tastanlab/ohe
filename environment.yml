@@ -255,4 +255,3 @@ dependencies:
       - web-cache==1.1.0
       - wget==3.2
       - wikipedia==1.4.0
-prefix: /cta/users/ebcandir/miniconda3/envs/drug_synergy

@@ -5,7 +5,7 @@ import gzip
 
 
 
-data_file = '/cta/users/ebcandir/DeepSynergy/data_test_fold0_tanh.p.gz' # pickle file which contains the data (produced with normalize.ipynb)
+data_file = '/DeepSynergy/data_test_fold0_tanh.p.gz' # pickle file which contains the data (produced with normalize.ipynb)
 
 
 
@@ -106,7 +106,7 @@ for test_fold in range(total_folds):
 
         pickle.dump(
             (X_tr, X_val, X_train, X_test, y_tr, y_val, y_train, y_test),
-            open(f'/cta/users/ebcandir/DeepSynergy/data_test_fold{test_fold}_val_fold{val_fold}_{norm}.p', 'wb')
+            open(f'/DeepSynergy/data_test_fold{test_fold}_val_fold{val_fold}_{norm}.p', 'wb')
         )
 
         config_idx += 1

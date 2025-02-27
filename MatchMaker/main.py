@@ -19,16 +19,16 @@ tf.random.set_seed(42)
 
 parser = argparse.ArgumentParser(description='REQUEST REQUIRED PARAMETERS OF MatchMaker')
 
-parser.add_argument('--comb-data-name', default='/cta/users/ebcandir/matchmaker/data/drugcomb2/DrugCombV2.csv',
+parser.add_argument('--comb-data-name', default='/matchmaker/data/drugcomb2/DrugCombV2.csv',
                     help="Name of the drug combination data")
 
-parser.add_argument('--cell_line-gex', default='/cta/users/ebcandir/matchmaker/data/drugcomb2/cell_line_gex_dc2.csv',
+parser.add_argument('--cell_line-gex', default='/matchmaker/data/drugcomb2/cell_line_gex_dc2.csv',
                     help="Name of the cell line gene expression data")
 
-parser.add_argument('--drug1-chemicals', default='/cta/users/ebcandir/matchmaker/data/drugcomb2/dc2_drug1_chem_py.csv',
+parser.add_argument('--drug1-chemicals', default='/matchmaker/data/drugcomb2/dc2_drug1_chem_py.csv',
                     help="Name of the chemical features data for drug 1")
 
-parser.add_argument('--drug2-chemicals', default='/cta/users/ebcandir/matchmaker/data/drugcomb2/dc2_drug2_chem_py.csv',
+parser.add_argument('--drug2-chemicals', default='/matchmaker/data/drugcomb2/dc2_drug2_chem_py.csv',
                     help="Name of the chemical features data for drug 2")
 
 parser.add_argument('--gpu-devices', default='0', type=str,
@@ -37,25 +37,25 @@ parser.add_argument('--gpu-devices', default='0', type=str,
 parser.add_argument('--train-test-mode', default=1, type = int,
                     help="Test of train mode (0: test, 1: train)")
 
-parser.add_argument('--train-ind', default='/cta/users/ebcandir/matchmaker/data/drugcomb2/train_set_lpo',
+parser.add_argument('--train-ind', default='/matchmaker/data/drugcomb2/train_set_lpo',
                     help="Data indices that will be used for training")
 
-parser.add_argument('--val-ind', default='/cta/users/ebcandir/matchmaker/data/drugcomb2/val_set_lpo',
+parser.add_argument('--val-ind', default='/matchmaker/data/drugcomb2/val_set_lpo',
                     help="Data indices that will be used for validation")
 
-parser.add_argument('--test-ind', default='/cta/users/ebcandir/matchmaker/data/drugcomb2/test_set_lpo',
+parser.add_argument('--test-ind', default='/matchmaker/data/drugcomb2/test_set_lpo',
                     help="Data indices that will be used for test")
 
-parser.add_argument('--arch', default='/cta/users/ebcandir/matchmaker/data/drugcomb2/scripts/architecture.txt',
+parser.add_argument('--arch', default='/matchmaker/data/drugcomb2/scripts/architecture.txt',
                     help="Architecute file to construct MatchMaker layers")
 
 parser.add_argument('--gpu-support', default=True,
                     help='Use GPU support or not')
 
-parser.add_argument('--saved-model-name', default="/cta/users/ebcandir/matchmaker/data/drugcomb2/lpo/overfit_lpo_matchmaker_saved.h5",
+parser.add_argument('--saved-model-name', default="/matchmaker/data/drugcomb2/lpo/overfit_lpo_matchmaker_saved.h5",
                     help='Model name to save weights')
 
-parser.add_argument('--saved-path', default="/cta/users/ebcandir/matchmaker/data/drugcomb2/lpo/")
+parser.add_argument('--saved-path', default="/matchmaker/data/drugcomb2/lpo/")
 
 parser.add_argument('--drug-features', default=0, type = int,
                     help="Type of the drug features (0: drug feature, 1: one hot encoded feature)")

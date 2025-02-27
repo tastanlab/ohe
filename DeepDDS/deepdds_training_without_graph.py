@@ -67,11 +67,11 @@ datafile = 'new_labels_0_10'
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print('The code uses GPU...' if torch.cuda.is_available() else 'The code uses CPU!!!')
 
-drug1_path = '/cta/users/ebcandir/DeepDDs/data/new_labels_0_10_drug1_features_ohe.csv'
-drug2_path = '/cta/users/ebcandir/DeepDDs/data/new_labels_0_10_drug2_features_ohe.csv'
-#cell_path = '/cta/users/ebcandir/DeepDDs/data/new_labels_0_10_cell_features.csv' #  For using cell line features
-cell_path = '/cta/users/ebcandir/DeepDDs/data/new_labels_0_10_cell_features_ohe.csv'  # For using cell line one hot encoded features
-label_path = '/cta/users/ebcandir/DeepDDs/data/new_labels_0_10.csv'
+drug1_path = '/DeepDDS/data/new_labels_0_10_drug1_features_ohe.csv'
+drug2_path = '/DeepDDS/data/new_labels_0_10_drug2_features_ohe.csv'
+#cell_path = '/DeepDDS/data/new_labels_0_10_cell_features.csv' #  For using cell line features
+cell_path = '/DeepDDS/data/new_labels_0_10_cell_features_ohe.csv'  # For using cell line one hot encoded features
+label_path = '/DeepDDS/data/new_labels_0_10.csv'
 
 drug1_features = pd.read_csv(drug1_path).values  
 drug2_features = pd.read_csv(drug2_path).values  
@@ -94,10 +94,10 @@ for i in range(5):
     #test_num = random_num[pot*i:pot*(i+1)]
     #train_num = random_num[:pot*i] + random_num[pot*(i+1):]
     
-    train_ind = list(np.loadtxt("/cta/users/ebcandir/DeepDDs/data/train_indices_fold_" + str(i + 1) +".txt",dtype=int))
+    train_ind = list(np.loadtxt("/DeepDDS/data/train_indices_fold_" + str(i + 1) +".txt",dtype=int))
     dataset_train = torch.utils.data.Subset(dataset, train_ind)
 
-    test_ind = list(np.loadtxt("/cta/users/ebcandir/DeepDDs/data/test_indices_fold_" + str(i + 1) +".txt",dtype=int))
+    test_ind = list(np.loadtxt("/DeepDDS/data/test_indices_fold_" + str(i + 1) +".txt",dtype=int))
     dataset_test = torch.utils.data.Subset(dataset, test_ind)
 
 
@@ -108,8 +108,8 @@ for i in range(5):
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=LR)
 
-    model_file_name = f'/cta/users/ebcandir/DeepDDs/data/result/OHENet(DrugA_DrugB){i}--model_{datafile}.model'
-    file_AUCs = f'/cta/users/ebcandir/DeepDDs/data/result/OHENet(DrugA_DrugB){i}--AUCs--{datafile}.txt'
+    model_file_name = f'/DeepDDS/data/result/OHENet(DrugA_DrugB){i}--model_{datafile}.model'
+    file_AUCs = f'/DeepDDS/data/result/OHENet(DrugA_DrugB){i}--AUCs--{datafile}.txt'
     AUCs_header = 'Epoch\tAUC_dev\tPR_AUC\tACC\tBACC\tPREC\tTPR\tKAPPA\tRECALL'
 
     with open(file_AUCs, 'w') as f:

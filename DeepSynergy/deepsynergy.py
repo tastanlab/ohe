@@ -41,8 +41,8 @@ if tf.config.list_physical_devices('GPU'):
         print(e)
 
 
-hyperparameter_file = '/cta/users/ebcandir/DeepSynergy/hyperparameters.txt' # textfile which contains the hyperparameters of the model
-data_file = f'/cta/users/ebcandir/DeepSynergy/data_test_fold{args.test}_val_fold{args.val}_tanh.p' # pickle file which contains the data (produced with normalize.ipynb)
+hyperparameter_file = '/DeepSynergy/hyperparameters.txt' # textfile which contains the hyperparameters of the model
+data_file = f'/DeepSynergy/data_test_fold{args.test}_val_fold{args.val}_tanh.p' # pickle file which contains the data (produced with normalize.ipynb)
 
 def moving_average(a, n=3):
     ret = np.cumsum(a, dtype=float)
@@ -111,8 +111,8 @@ def mse(y, pred):
 
 
 
-np.savetxt(f'/cta/users/ebcandir/DeepSynergy/pred_test{args.test}_val{args.val}.txt', np.asarray(pred), delimiter=",")
-np.savetxt(f'/cta/users/ebcandir/DeepSynergy/y_test{args.test}_val{args.val}.txt', np.asarray(y_test), delimiter=",")
+np.savetxt(f'/DeepSynergy/pred_test{args.test}_val{args.val}.txt', np.asarray(pred), delimiter=",")
+np.savetxt(f'/DeepSynergy/y_test{args.test}_val{args.val}.txt', np.asarray(y_test), delimiter=",")
 
 mse_value = mse(y_test, pred)
 spearman_value = spearman(y_test, pred)

@@ -1,10 +1,10 @@
 import pandas as pd
 
 # File paths
-pc3_path = "/cta/users/ebcandir/MARSY/data/PC3_drugs_gene_expression.csv"
-mcf7_path = "/cta/users/ebcandir/MARSY/data/MCF7_drugs_gene_expression.csv"
-cell_lines_path = "/cta/users/ebcandir/MARSY/data/75_cell_lines_gene_expression.csv"
-data_csv_path = "/cta/users/ebcandir/MARSY/data/data.csv"
+pc3_path = "/MARSY/data/PC3_drugs_gene_expression.csv"
+mcf7_path = "/MARSY/data/MCF7_drugs_gene_expression.csv"
+cell_lines_path = "/MARSY/data/75_cell_lines_gene_expression.csv"
+data_csv_path = "/MARSY/data/data.csv"
 
 # Load the data
 pc3_data = pd.read_csv(pc3_path,  header=0)  # Drug names are headers
@@ -56,7 +56,7 @@ feature_columns = (
 features_df = pd.DataFrame(feature_dataset, columns=feature_columns)
 
 # Save the features to a CSV file
-output_path = "/cta/users/ebcandir/MARSY/data/feature_dataset.csv"
+output_path = "/MARSY/data/feature_dataset.csv"
 features_df.to_csv(output_path, index=False)
 
 print(f"Feature dataset saved to {output_path}")

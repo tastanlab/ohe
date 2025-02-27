@@ -13,8 +13,8 @@ from sklearn.metrics import mean_squared_error
 import numpy as np
 
 # Load main dataset
-data = pd.read_csv('/cta/users/ebcandir/MARSY/data/output_ohe.csv').to_numpy()
-data_targets = pd.read_csv('/cta/users/ebcandir/MARSY/data/data.csv')
+data = pd.read_csv('/MARSY/data/output_ohe.csv').to_numpy()
+data_targets = pd.read_csv('/MARSY/data/data.csv')
 
 targets = data_targets[['Ri1', 'Ri2', 'Synergy_Zip']].to_numpy()
 
@@ -29,8 +29,8 @@ Y_test = pd.read_csv('Predictions_Sample.csv', delimiter = ',', index_col='Unnam
 
 # Function to load fold indices
 def load_fold_indices(fold_num):
-    train_indices = np.loadtxt(f'/cta/users/ebcandir/MARSY/data/lpo_folds/Pair_Tr{fold_num}.txt', dtype=int)
-    test_indices = np.loadtxt(f'/cta/users/ebcandir/MARSY/data/lpo_folds/Pair_Tst{fold_num}.txt', dtype=int)
+    train_indices = np.loadtxt(f'/MARSY/data/lpo_folds/Pair_Tr{fold_num}.txt', dtype=int)
+    test_indices = np.loadtxt(f'/MARSY/data/lpo_folds/Pair_Tst{fold_num}.txt', dtype=int)
     return train_indices, test_indices
 
 # Function to prepare data for the fold
@@ -195,11 +195,11 @@ for fold_num in range(1, num_folds + 1):
     pred = trained_MARSY.predict(testing_set)
     
     Y_test_df = pd.DataFrame(Y_test, columns=["Truth_RS1", "Truth_RS2", "Truth_Zip"])
-    Y_test_file = (f"/cta/users/ebcandir/MARSY/data/fold_{fold_num}_Y_test_ohe.csv")
+    Y_test_file = (f"/MARSY/data/fold_{fold_num}_Y_test_ohe.csv")
     Y_test_df.to_csv(Y_test_file, index=False)
     
     pred_df = pd.DataFrame(pred, columns=["Pred_RS1", "Pred_RS2", "Pred_Zip"])
-    pred_file = (f"/cta/users/ebcandir/MARSY/data/fold_{fold_num}_predictions_ohe.csv")
+    pred_file = (f"/MARSY/data/fold_{fold_num}_predictions_ohe.csv")
     pred_df.to_csv(pred_file, index=False)
     
     print(f"Predictions for Fold {fold_num} saved to {pred_file}")
