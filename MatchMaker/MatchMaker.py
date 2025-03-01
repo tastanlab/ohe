@@ -11,73 +11,66 @@ import random
 
 
 
-def data_loader(drug1_chemicals,drug2_chemicals,cell_line_gex,comb_data_name, drug_feature, cell_line_feature ):
+def data_loader(drug1_features,drug2_features,cell_line_features,comb_data_name, drug_feature_type, cell_line_feature_type ):
     print("File reading ...")
 
     comb_data = pd.read_csv(comb_data_name)
 
-    if(cell_line_feature == 0):
-        cell_line = pd.read_csv(cell_line_gex,header=None)
+    if(cell_line_feature_type == 0):
+        cell_line = pd.read_csv(cell_line_features,header=None)
     else:
-        cell_line = pd.read_csv(cell_line_gex)
+        cell_line = pd.read_csv(cell_line_features)
 
     cell_line = np.array(cell_line.values)
 
-    if(drug_feature == 0):
-        chem1 = pd.read_csv(drug1_chemicals,header=None)
-        chem2 = pd.read_csv(drug2_chemicals,header=None)
+    if(drug_feature_type == 0):
+        d_feature1 = pd.read_csv(drug1_features,header=None)
+        d_feature2 = pd.read_csv(drug2_features,header=None)
     else:
-        chem1 = pd.read_csv(drug1_chemicals)
-        chem2 = pd.read_csv(drug2_chemicals)
+        d_feature1 = pd.read_csv(drug1_features)
+        d_feature2 = pd.read_csv(drug2_features)
 
-    chem1 = np.array(chem1.values)
-    chem2 = np.array(chem2.values)
+    d_feature1 = np.array(d_feature1.values)
+    d_feature2 = np.array(d_feature2.values)
 
     synergies = np.array(comb_data["synergy_loewe"])
 
-    return chem1, chem2, cell_line, synergies
+    return d_feature1, d_feature2, cell_line, synergies
 
 
-def prepare_data(chem1, chem2, cell_line, synergies, norm, train_ind_fname, val_ind_fname, test_ind_fname, drug_feature, cell_line_feature):
+def prepare_data(d_feature1, d_feature2, cell_line, synergies, norm, train_ind_fname, val_ind_fname, test_ind_fname, drug_feature_type, cell_line_feature_type):
     print("Data normalization and preparation of train/validation/test data")
 
     test_ind = list(np.loadtxt(test_ind_fname,dtype=int))
     val_ind = list(np.loadtxt(val_ind_fname,dtype=int))
     train_ind = list(np.loadtxt(train_ind_fname,dtype=int))
 
-
-    # Remove any matching index
-    matching_indices = list(np.loadtxt("/matchmaker/data/drugcomb2/moa_matching_indices.txt", dtype=int))
-    test_ind  = [idx for idx in test_ind  if idx not in matching_indices]
-    val_ind   = [idx for idx in val_ind   if idx not in matching_indices]
-    train_ind = [idx for idx in train_ind if idx not in matching_indices]
-
     train_data = {}
     val_data = {}
     test_data = {}
 
-    if(drug_feature == 0):
-        train1 = np.concatenate((chem1[train_ind,:],chem2[train_ind,:]),axis=0)
+    if(drug_feature_type == 0):
+        train1 = np.concatenate((d_feature1[train_ind,:],d_feature2[train_ind,:]),axis=0)
         train_data['drug1'], mean1, std1, mean2, std2, feat_filt = normalize(train1, norm=norm)
-        val_data['drug1'], mmean1, sstd1, mmean2, sstd2, feat_filtt = normalize(chem1[val_ind,:],mean1, std1, mean2, std2, feat_filt=feat_filt, norm=norm)
-        test_data['drug1'], mean1, std1, mean2, std2, feat_filt = normalize(chem1[test_ind,:],mean1, std1, mean2, std2, feat_filt=feat_filt, norm=norm)
+        val_data['drug1'], mmean1, sstd1, mmean2, sstd2, feat_filtt = normalize(d_feature1[val_ind,:],mean1, std1, mean2, std2, feat_filt=feat_filt, norm=norm)
+        test_data['drug1'], mean1, std1, mean2, std2, feat_filt = normalize(d_feature1[test_ind,:],mean1, std1, mean2, std2, feat_filt=feat_filt, norm=norm)
         
-        train2 = np.concatenate((chem2[train_ind,:],chem1[train_ind,:]),axis=0)
+        train2 = np.concatenate((d_feature2[train_ind,:],d_feature1[train_ind,:]),axis=0)
         train_data['drug2'], mean1, std1, mean2, std2, feat_filt = normalize(train2, norm=norm)
-        val_data['drug2'], mmean1, sstd1, mmean2, sstd2, feat_filtt = normalize(chem2[val_ind,:],mean1, std1, mean2, std2, feat_filt=feat_filt, norm=norm)
-        test_data['drug2'], mean1, std1, mean2, std2, feat_filt = normalize(chem2[test_ind,:],mean1, std1, mean2, std2, feat_filt=feat_filt, norm=norm)
+        val_data['drug2'], mmean1, sstd1, mmean2, sstd2, feat_filtt = normalize(d_feature2[val_ind,:],mean1, std1, mean2, std2, feat_filt=feat_filt, norm=norm)
+        test_data['drug2'], mean1, std1, mean2, std2, feat_filt = normalize(d_feature2[test_ind,:],mean1, std1, mean2, std2, feat_filt=feat_filt, norm=norm)
     else:
-        train1 = np.concatenate((chem1[train_ind,:],chem2[train_ind,:]),axis=0)
+        train1 = np.concatenate((d_feature1[train_ind,:],d_feature2[train_ind,:]),axis=0)
         train_data['drug1'] =train1
-        val_data['drug1'] = chem1[val_ind,:]
-        test_data['drug1']= chem1[test_ind,:]
+        val_data['drug1'] = d_feature1[val_ind,:]
+        test_data['drug1']= d_feature1[test_ind,:]
 
-        train2 = np.concatenate((chem2[train_ind,:],chem1[train_ind,:]),axis=0)
+        train2 = np.concatenate((d_feature2[train_ind,:],d_feature1[train_ind,:]),axis=0)
         train_data['drug2']= train2
-        val_data['drug2'] = chem2[val_ind,:]
-        test_data['drug2'] = chem2[test_ind,:]
+        val_data['drug2'] = d_feature2[val_ind,:]
+        test_data['drug2'] = d_feature2[test_ind,:]
 
-    if(cell_line_feature == 0):    
+    if(cell_line_feature_type == 0):    
         train3 = np.concatenate((cell_line[train_ind,:],cell_line[train_ind,:]),axis=0)
         train_cell_line, mean1, std1, mean2, std2, feat_filt = normalize(train3, norm=norm)
         val_cell_line, mmean1, sstd1, mmean2, sstd2, feat_filtt = normalize(cell_line[val_ind,:],mean1, std1, mean2, std2, feat_filt=feat_filt, norm=norm)
