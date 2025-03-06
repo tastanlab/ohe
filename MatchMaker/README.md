@@ -73,7 +73,7 @@ Combination Dataset:
 
 #### Features for Training
 1. **Drug & Cell Line Features**  
-   Download: [NCI Almanac Features](...)  
+   Download: [NCI Almanac Features](https://drive.google.com/file/d/1-4dnjBUln11B5ySqOwPQGJC4cAAOuuvy/view?usp=sharing)  
    - Drugs:  
      - `drug1_chem_desc.csv`  
      - `drug2_chem_desc.csv`  
