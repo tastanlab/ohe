@@ -109,7 +109,7 @@ python main.py \
     --output-path drugcomb_data/lpo/ \
     --drug-features 1 \
     --cell-line-features 1 \
-    --split_index 1
+    --split-index 1
 ```
 
 ### Example: DrugComb with Drug&Cell Line Features (LPO Split, Replicate 1)
@@ -129,7 +129,7 @@ python main.py \
     --output-path drugcomb_data/lpo/ \
     --drug-features 0 \
     --cell-line-features 0 \
-    --split_index 1
+    --split-index 1
 ```
 ### Example: NCI Almanac with One-Hot Encoded Features (LCO Split, Replicate 10)
 
@@ -148,7 +148,7 @@ python main.py \
     --output-path NCI_ALMANAC/lco/ \
     --drug-features 1 \
     --cell-line-features 1 \
-    --split_index 10
+    --split-index 10
 ```
 
 ## Reproducing Experiments
