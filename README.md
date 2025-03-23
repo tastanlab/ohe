@@ -42,7 +42,7 @@ To compare their ability to capture information from drug and cell line features
 To ensure reproducibility, install dependencies using Conda:
 ```
 conda env create -f environment.yml
-conda activate drug-synergy
+conda activate drug_synergy
 ```
 
 ---
