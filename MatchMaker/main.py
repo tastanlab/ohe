@@ -73,13 +73,10 @@ print(tf.config.list_physical_devices('GPU'))
 # If there are GPUs available, set TensorFlow to use only the first GPU
 if tf.config.list_physical_devices('GPU'):
     try:
-        # Specify which GPU to use
         tf.config.set_visible_devices(tf.config.list_physical_devices('GPU')[0], 'GPU')
-        # Configure TensorFlow to use only a specific amount of GPU memory
         for gpu in tf.config.list_physical_devices('GPU'):
             tf.config.experimental.set_memory_growth(gpu, True)
     except RuntimeError as e:
-        # Catch runtime error if modification occurs after GPUs have been initialized
         print(e)
 
 # load and process data
@@ -90,18 +87,7 @@ norm = 'tanh_norm'
 
 i = args.split_index
 
-# If there are GPUs available, set TensorFlow to use only the first GPU
-if tf.config.list_physical_devices('GPU'):
-    try:
-        # Specify which GPU to use
-        tf.config.set_visible_devices(tf.config.list_physical_devices('GPU')[0], 'GPU')
-        # Configure TensorFlow to use only a specific amount of GPU memory
-        for gpu in tf.config.list_physical_devices('GPU'):
-            tf.config.experimental.set_memory_growth(gpu, True)
-    except RuntimeError as e:
-        # Catch runtime error if modification occurs after GPUs have been initialized
-        print(e)
-        
+
 train_ind = f"{args.train_ind}_{i}.txt"
 val_ind = f"{args.val_ind}_{i}.txt"
 test_ind = f"{args.test_ind}_{i}.txt"
