@@ -87,7 +87,6 @@ norm = 'tanh_norm'
 
 i = args.split_index
 
-
 train_ind = f"{args.train_ind}_{i}.txt"
 val_ind = f"{args.val_ind}_{i}.txt"
 test_ind = f"{args.test_ind}_{i}.txt"
@@ -138,7 +137,6 @@ mse_value = performance_metrics.mse(test_data['y'], pred)
 spearman_value = performance_metrics.spearman(test_data['y'], pred)
 pearson_value = performance_metrics.pearson(test_data['y'], pred)
 se = performance_metrics.calculate_se(test_data['y'], pred)
-
 
 # Save results for the current split
 np.savetxt(f"{args.output_path}y_test_{i}.txt", np.asarray(test_data['y']), delimiter=",")
