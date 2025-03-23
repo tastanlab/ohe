@@ -81,4 +81,4 @@ Additionally, a hybrid experiment using one-hot encoded drug features and gene e
 - In `deepdds_training_without_graph.py`, and `models/deepdds_without_graph.py` uncomment the code section for cell line gene expression features("For using cell line features") and comment out the one-hot encoded section("For using cell line one hot encoded features").
 
 
-> **Important Note:** Ensure you provide the correct paths to the input files and directories.
+> **Important Note:** Ensure you provide the correct paths to the input files and directories. 

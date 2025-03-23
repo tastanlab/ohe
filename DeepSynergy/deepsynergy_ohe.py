@@ -1,15 +1,11 @@
 import os, sys
-
 import pandas as pd
 import numpy as np
 import pickle
 import gzip
-
 import matplotlib.pyplot as plt
-
 from scipy import stats
 from sklearn.metrics import mean_squared_error
-import numpy as np
 import argparse
 
 
@@ -30,13 +26,10 @@ print(tf.config.list_physical_devices('GPU'))
 # If there are GPUs available, set TensorFlow to use only the first GPU
 if tf.config.list_physical_devices('GPU'):
     try:
-        # Specify which GPU to use
         tf.config.set_visible_devices(tf.config.list_physical_devices('GPU')[0], 'GPU')
-        # Configure TensorFlow to use only a specific amount of GPU memory
         for gpu in tf.config.list_physical_devices('GPU'):
             tf.config.experimental.set_memory_growth(gpu, True)
     except RuntimeError as e:
-        # Catch runtime error if modification occurs after GPUs have been initialized
         print(e)
 
 
@@ -130,6 +123,4 @@ def calculate_se(y, pred):
     mse_se = np.std(squared_errs, ddof=1) / np.sqrt(len(squared_errs))   
     return mse_se
 
-
-# Now call the function with your test data and predictions
 calculate_se(y_test, pred)
