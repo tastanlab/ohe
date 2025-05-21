@@ -26,7 +26,7 @@ feature_dataset = []
 # Iterate through each row in the input data
 for _, row in data.iterrows():
     print(row)
-    drug1_pc3_features = pc3_data["ilomastat"].values
+    drug1_pc3_features = pc3_data[row['Drug1_PC3']].values
     drug1_mcf7_features = mcf7_data[row['Drug1_MCF7']].values
     drug2_pc3_features = pc3_data[row['Drug2_PC3']].values
     drug2_mcf7_features = mcf7_data[row['Drug2_MCF7']].values
