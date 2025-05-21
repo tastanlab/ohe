@@ -44,7 +44,6 @@ Split files are located in:
   After concatenating all features, the final vector length for each instance is:  
   `978 (Drug1_PC3) + 978 (Drug1_MCF7) + 978 (Drug2_PC3) + 978 (Drug2_MCF7) + 4639 (Cell Line) = 8551`.
 
-  [Download MARSY Features](https://drive.google.com/file/d/1bVIB9pyUNvypyUuDB9yAX-sRhsSXJP46/view?usp=drive_link).
   
 #### One-Hot Encoded Features
 - **`ohe_dataset.csv`**: Contains one-hot encoded representations for both drugs and cell lines.
