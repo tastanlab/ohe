@@ -40,7 +40,7 @@ def prepare_fold_data(data, targets, train_indices, test_indices):
     return X_train, X_test, Y_train, Y_test
 
 ### Data formatting to fit MARSY's input requirements ###
-def data_preparation(X_tr, X_tst, pair_range):
+def data_preparation(X_train, X_test, pair_range):
     X_tr = []
     X_tst = []
     

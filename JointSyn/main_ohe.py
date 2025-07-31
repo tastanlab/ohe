@@ -30,14 +30,14 @@ def run(fold, repeat):
     setup_seed(42)
 
     transform = transforms.ToTensor()
-    path_train = '/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_fold'+str(fold)+'_train.csv'
-    path_val = '/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_fold'+str(fold)+'_val.csv'
+    path_train = '/data/repeat'+str(repeat)+'_fold'+str(fold)+'_train.csv'
+    path_val = '/data/repeat'+str(repeat)+'_fold'+str(fold)+'_val.csv'
     train_data = load_data(path_train, transform)
     train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
     valid_data = load_data(path_val, transform)
     valid_loader = DataLoader(valid_data, batch_size=batch_size, shuffle=True)
     
-    log_dir = '/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_fold'+str(fold)+'.txt'
+    log_dir = '/save/repeat'+str(repeat)+'_fold'+str(fold)+'.txt'
     f = open(log_dir,'w')
     f.close()
 
@@ -47,16 +47,17 @@ def run(fold, repeat):
     optimizer = optim.Adam(model.parameters(), lr=lr, betas=(0.9, 0.999), amsgrad=False)
     start_epoch = 0
     best_pear = 0
-    save_dir = '/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_fold'+str(fold)+'_best.pth'
+    save_dir = '/save/repeat'+str(repeat)+'_fold'+str(fold)+'_best.pth'
     
     for epoch in range(start_epoch+1, epochs+1):
         train_loss = train(model, device, train_loader, optimizer, criterion, epoch)
-        valid_loss, mse, rmse, r2, pear = valid(model, device, valid_loader, criterion)
+        valid_loss, mse, rmse, r2, pear, se = valid(model, device, valid_loader, criterion)
         best_pear = save_model(pear, best_pear, epoch, model, optimizer, save_dir)
         if epoch%20 == 0:
             res = 'Epoch: {:05d}, Train loss:{:.3f}, Valid loss: {:.3f}, '.format(epoch, train_loss, valid_loss)
             res = res + 'MSE: {:.3f}, RMSE: {:.3f}, '.format(mse, rmse)
             res = res + 'R2: {:.3f}, Pearson: {:.3f}'.format(r2, pear)
+            res += ' SE: {:.3f}'.format(se)
             print(res)
             with open(log_dir,"a") as f:
                 f.write(res+'\n')
@@ -68,7 +69,7 @@ def get_res(repeat):
     for fold in range(1,6):
         print(f'Start test, repeat {repeat}, fold {fold}')
         transform = transforms.ToTensor()
-        path_test = '/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_fold'+str(fold)+'_test.csv'
+        path_test = '/data/repeat'+str(repeat)+'_fold'+str(fold)+'_test.csv'
         test_data = load_data(path_test, transform)
         test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=False)
 
@@ -76,7 +77,7 @@ def get_res(repeat):
         model = Net(model_config, model_View2)
         model.to(device)
 
-        save_dir = '/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_fold'+str(fold)+'_best.pth'
+        save_dir = '/save/repeat'+str(repeat)+'_fold'+str(fold)+'_best.pth'
         if os.path.exists(save_dir):
             checkpoint = torch.load(save_dir, map_location='cpu')
             model.load_state_dict(checkpoint['model'])
@@ -101,34 +102,36 @@ def get_res(repeat):
     
     test_data_pd = test_data_pd.drop(labels=['Unnamed: 0'],axis=1)
     
-    pred_dir = '/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_predict.csv'
+    pred_dir = '/predict/repeat'+str(repeat)+'_predict.csv'
     test_data_pd.to_csv(pred_dir)
     
-    mse, rmse, r2, pear = metric(test_data_pd)
+    mse, rmse, r2, pear, se = metric(test_data_pd)
     res = 'MSE: {:.3f}, RMSE: {:.3f}, '.format(mse, rmse)
     res = res + 'R2: {:.3f}, Pearson: {:.3f}'.format(r2, pear)
+    res += ' SE: {:.3f}'.format(se)
     print(res)
     
-    res_dir = '/JointSyn/Model/JointSyn_reg/rawData/repeat'+str(repeat)+'_metric.txt'
+    res_dir = '/predict/repeat'+str(repeat)+'_metric.txt'
     with open(res_dir, "w") as f:
         f.write(res+'\n')
         f.close()
         
         
 if __name__ == '__main__':
-    split_flag = 1 # split data
+    split_flag = 0 # split data
     train_flag = 1 # train model and save best model
     test_flag = 1 # test model and get predict
     
     if split_flag == 1:
         print('Split data')
-        data = pd.read_csv('/JointSyn/Model/JointSyn_reg/rawData/data_to_split.csv')
+        data = pd.read_csv('/rawData/data_to_split.csv')
         data = data.drop(columns='Unnamed: 0')
         print(data)
 
         for repeat in range(1,11):
             split(data, repeat=repeat)
-            
+    
+        
     print('Load config')
     model_config = config.model_config
     gpu = model_config['gpu']
@@ -142,9 +145,9 @@ if __name__ == '__main__':
         device = torch.device('cpu')
     
     #pair_graph = np.load('./rawData/Pair_graph.npy', allow_pickle=True)
-    cell = pd.read_csv('/JointSyn/Model/JointSyn_reg/rawData/ohe_cell.csv')
+    cell = pd.read_csv('/rawData/ohe_cell.csv')
     cell = cell.drop(labels=['id'],axis=1)
-    drug_fp = pd.read_csv('/JointSyn/Model/JointSyn_reg/rawData/ohe_drug.csv')
+    drug_fp = pd.read_csv('/rawData/ohe_drug.csv')
     drug_fp = drug_fp.drop(labels=['id'],axis=1)
 
     for repeat in range(1,11):
