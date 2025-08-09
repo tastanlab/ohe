@@ -256,6 +256,5 @@ if __name__ == "__main__":
             avg_mse = sum(m for _, m in all_mse) / len(all_mse)
             f.write(f"Average MSE: {avg_mse:.4f}\n")
                 
-                
         print(f"\nTest MSE results saved to {mse_file}")
 
