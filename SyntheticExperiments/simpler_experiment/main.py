@@ -83,28 +83,6 @@ def train_model(model, train_loader, val_loader, save_path, epochs=1000, lr=1e-3
     with open(save_path, "w") as f:
         json.dump(results, f)
 
-
-def get_feature_arrays(indices, synergy_df, drug_feat_dict, cell_feat_dict):
-    drug1_features = []
-    drug2_features = []
-    cell_features = []
-    labels = []
-    for idx in indices:
-        row = synergy_df.iloc[idx]
-        drug1_features.append(drug_feat_dict[row['Drug_1']])
-        drug2_features.append(drug_feat_dict[row['Drug_2']])
-        cell_features.append(cell_feat_dict[row['CellLine']])
-        labels.append(row['SynergyScore'])
-
-        # Swapped order
-        drug1_features.append(drug_feat_dict[row['Drug_2']])
-        drug2_features.append(drug_feat_dict[row['Drug_1']])
-        cell_features.append(cell_feat_dict[row['CellLine']])
-        labels.append(row['SynergyScore'])
-    return np.array(drug1_features), np.array(drug2_features), np.array(cell_features), np.array(labels)
-
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--save_dir", type=str, default="/simpler_experiment/")
@@ -151,29 +129,37 @@ if __name__ == "__main__":
             val_indices = np.loadtxt(val_idx_file, dtype=int)
             test_indices = np.loadtxt(test_idx_file, dtype=int)
 
-            # === Load feature arrays ===
-            train_drug1_vec, train_drug2_vec, train_cell_vec, y_train = get_feature_arrays(train_indices, synergy_df, drug_feature_dict, cell_feature_dict)
-            val_drug1_vec, val_drug2_vec, val_cell_vec, y_val = get_feature_arrays(val_indices, synergy_df, drug_feature_dict, cell_feature_dict)
-            test_drug1_vec, test_drug2_vec, test_cell_vec, y_test = get_feature_arrays(test_indices, synergy_df, drug_feature_dict, cell_feature_dict)
+            def get_feature_arrays(indices):
+                drug1, drug2, cell, y = [], [], [], []
+                for idx in indices:
+                    row = synergy_df.iloc[idx]
+                    drug1.append(drug_feature_dict[row['Drug_1']])
+                    drug2.append(drug_feature_dict[row['Drug_2']])
+                    cell.append(cell_feature_dict[row['CellLine']])
+                    y.append(row['SynergyScore'])
+                return np.array(drug1), np.array(drug2), np.array(cell), np.array(y)
 
-               
-            # === Combine arrays ===
-            X_train = np.concatenate([train_drug1_vec, train_drug2_vec, train_cell_vec], axis=1)
-            X_val = np.concatenate([val_drug1_vec, val_drug2_vec, val_cell_vec], axis=1)
-            X_test = np.concatenate([test_drug1_vec, test_drug2_vec, test_cell_vec], axis=1)
+            # build train, validation, and test tensors
+            X_d1, X_d2, X_c, y = get_feature_arrays(train_indices)
+
+            X_orig = np.concatenate([X_d1, X_d2, X_c], axis=1)
+            X_reversed = np.concatenate([X_d2, X_d1, X_c], axis=1)
+
+            X_train = np.concatenate([X_orig, X_reversed], axis=0)
+            y_train = np.concatenate([y, y], axis=0)
+
 
             X_train = torch.tensor(X_train, dtype=torch.float32)
-            X_val = torch.tensor(X_val, dtype=torch.float32)
-            X_test = torch.tensor(X_test, dtype=torch.float32)
-
             y_train = torch.tensor(y_train, dtype=torch.float32)
-            y_val = torch.tensor(y_val, dtype=torch.float32)
-            y_test = torch.tensor(y_test, dtype=torch.float32)
 
-            print(f"X_train: {X_train.shape}, y_train: {y_train.shape}")
-            print(f"X_val: {X_val.shape}, y_val: {y_val.shape}")
-            print(f"X_test: {X_test.shape}, y_test: {y_test.shape}")
+            def make_tensor(indices):
+                d1, d2, c, y = get_feature_arrays(indices)
+                X = np.concatenate([d1, d2, c], axis=1)
+                return torch.tensor(X, dtype=torch.float32), torch.tensor(y, dtype=torch.float32)
 
+            X_val, y_val = make_tensor(val_indices)
+            X_test, y_test = make_tensor(test_indices)
+            
             train_dataset = TensorDataset(X_train, y_train)
             val_dataset = TensorDataset(X_val, y_val)
             test_dataset = TensorDataset(X_test, y_test)
