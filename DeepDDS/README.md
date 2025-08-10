@@ -54,7 +54,7 @@ In one-hot encoded feature experiments, the molecular graph module and cell line
 
 > Note: You can generate these three files using the provided `generate_ohe.py` script.
 
-## Shuffled Features
+### Shuffled Features
 In this setting, the **Combination Dataset** SMILES strings are randomly reassigned so that each drug is assigned a different SMILES than its original one. This breaks the true drug–feature associations while preserving the overall feature distribution.
 
 - **Shuffled Drug Features**: Molecular graphs are generated from the SMILES corresponding to the *newly assigned* drug indices in [`new_labels_0_10_deranged.csv`](https://huggingface.co/datasets/ebcandir/DeepDDS/resolve/main/new_labels_0_10_deranged.csv).  
