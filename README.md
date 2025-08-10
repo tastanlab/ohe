@@ -43,7 +43,7 @@ To compare their ability to capture information from drug and cell line features
 6. All settings were trained and evaluated under the same split protocols as the original works, with results reported using the original metrics.
 
 
-![Model Performance Comparison](figures/OHE.jpg)
+![Model Performance Comparison](figures/OHE.pdf)
 *Figure 2: Performance of models with original features, one-hot encoding (OHE), shuffled features, MoLFormer embeddings, and the Best Average baseline across datasets, split methods, and metrics.*
 
 ---
