@@ -8,7 +8,7 @@ from torchvision import transforms
 import random
 import os
 
-import config
+import config_ohe as config
 from model import Net_View2, Net
 from utils_data import split, load_data
 from utils_model import train, valid, save_model, test, metric

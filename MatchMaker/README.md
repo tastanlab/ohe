@@ -48,21 +48,37 @@ Combination Dataset:
 
 #### Features for Training
 1. **Drug & Cell Line Features**  
-   Download: [DrugComb Features](https://drive.google.com/file/d/14ipmuRyC4lLcE0MVZM7m3WbJuJU6fBwl/view?usp=sharing)  
+   Download:  
 
    - Drugs:  
-     - `drug1_chem_desc.csv`  
-     - `drug2_chem_desc.csv`  
+     - [`drug1_chem_desc.csv`](https://huggingface.co/datasets/ebcandir/DrugComb/resolve/main/matchmaker_chem_data_files/drug1_chem_desc.csv)
+     - [`drug2_chem_desc.csv`](https://huggingface.co/datasets/ebcandir/DrugComb/resolve/main/matchmaker_chem_data_files/drug2_chem_desc.csv)
    - Cell Line:  
-     - `cell_line_gex.csv`  
+     - [`cell_line_gex.csv`](https://huggingface.co/datasets/ebcandir/DrugComb/resolve/main/matchmaker_chem_data_files/cell_line_gex.csv)  
 
 2. **One-Hot Encoded Features**  
-   Download: [One-Hot Features](https://drive.google.com/file/d/1d1tCUPDNsCs9IiIKGTOkp-BFso1__-Hy/view?usp=sharing)  
+   Download:
    - Drugs:  
-     - `drug1_ohe.csv`  
-     - `drug2_ohe.csv`  
+     - [`drug1_ohe.csv`](https://huggingface.co/datasets/ebcandir/DrugComb/resolve/main/matchmaker_ohe_data_files/drug1_ohe.csv)
+     - [`drug2_ohe.csv`](https://huggingface.co/datasets/ebcandir/DrugComb/resolve/main/matchmaker_ohe_data_files/drug2_ohe.csv)
    - Cell Line:  
-     - `cell_line_ohe.csv`  
+     - [`cell_line_ohe.csv`](https://huggingface.co/datasets/ebcandir/DrugComb/resolve/main/matchmaker_ohe_data_files/cell_line_ohe.csv)
+    
+3. **Shuffled Features**  
+   Download:
+   - Drugs:  
+     - [`drug1_shuffle.csv`](https://huggingface.co/datasets/ebcandir/DrugComb/resolve/main/matchmaker_shuffled_data_files/drug1_shuffle.csv)
+     - [`drug2_shuffle.csv`](https://huggingface.co/datasets/ebcandir/DrugComb/resolve/main/matchmaker_shuffled_data_files/drug2_shuffle.csv)
+   - Cell Line:  
+     - [`cell_line_shuffle.csv`](https://huggingface.co/datasets/ebcandir/DrugComb/resolve/main/matchmaker_shuffled_data_files/cell_line_shuffle.csv)
+
+4. **MoLFormer Embeddings**  
+   Download:
+   - Drugs:  
+     - [`drug1_molformer.csv`](https://huggingface.co/datasets/ebcandir/DrugComb/resolve/main/matchmaker_molformer_data_files/drug1_molformer.csv)
+     - [`drug2_molformer.csv`](https://huggingface.co/datasets/ebcandir/DrugComb/resolve/main/matchmaker_molformer_data_files/drug2_molformer.csv)
+   - Cell Line:  
+     - [`cell_line_ohe.csv`](https://huggingface.co/datasets/ebcandir/DrugComb/resolve/main/matchmaker_ohe_data_files/cell_line_ohe.csv)
 
 ---
 
@@ -73,20 +89,20 @@ Combination Dataset:
 
 #### Features for Training
 1. **Drug & Cell Line Features**  
-   Download: [NCI Almanac Features](https://drive.google.com/file/d/1-4dnjBUln11B5ySqOwPQGJC4cAAOuuvy/view?usp=sharing)  
+   Download:
    - Drugs:  
-     - `drug1_chem_desc.csv`  
-     - `drug2_chem_desc.csv`  
+     - [`drug1_chem_desc.csv`](https://huggingface.co/datasets/ebcandir/NCI_Almanac/resolve/main/nci_almanac_chem_dataset/drug1_chem_desc.csv)
+     - [`drug2_chem_desc.csv`](https://huggingface.co/datasets/ebcandir/NCI_Almanac/resolve/main/nci_almanac_chem_dataset/drug2_chem_desc.csv)
    - Cell Line:  
-     - `cell_gene_gex.csv`  
+     - [`cell_gene_gex.csv`](https://huggingface.co/datasets/ebcandir/NCI_Almanac/resolve/main/nci_almanac_chem_dataset/cell_line_exp.csv)
 
 2. **One-Hot Encoded Features**  
-   Download: [One-Hot Features](https://drive.google.com/file/d/1Gx-DiHw-ItbEPdUURkoFxsj8Cuf_Pnqo/view?usp=sharing)  
+   Download: 
    - Drugs:  
-     - `drug1_ohe.csv`  
-     - `drug2_ohe.csv`  
+     - [`drug1_ohe.csv`](https://huggingface.co/datasets/ebcandir/NCI_Almanac/resolve/main/nci_almanac_ohe_dataset/drug1_ohe.csv)
+     - [`drug2_ohe.csv`](https://huggingface.co/datasets/ebcandir/NCI_Almanac/resolve/main/nci_almanac_ohe_dataset/drug2_ohe.csv)
    - Cell Line:  
-     - `cell_line_ohe.csv`  
+     - [`cell_line_ohe.csv`](https://huggingface.co/datasets/ebcandir/NCI_Almanac/resolve/main/nci_almanac_ohe_dataset/cell_line_ohe.csv)
 
 ---
 
@@ -130,6 +146,46 @@ python main.py \
     --drug-features 0 \
     --cell-line-features 0 \
     --split-index 1
+```
+
+### Example: DrugComb with Shuffled Features (LPO Split, Replicate 1)
+
+```bash
+export TF_DETERMINISTIC_OPS=1
+python main.py \
+    --comb-data-path drugcomb_data/DrugComb.csv \
+    --cell-line-features-path drugcomb_data/cell_line_shuffle.csv \
+    --drug1-features-path drugcomb_data/drug1_shuffle.csv \
+    --drug2-features-path drugcomb_data/drug2_shuffle.csv \
+    --train-test-mode 1 \
+    --train-ind drugcomb_data/splits/lpo/train_set_lpo \
+    --val-ind drugcomb_data/splits/lpo/val_set_lpo \
+    --test-ind drugcomb_data/splits/lpo/test_set_lpo \
+    --model-name drugcomb_data/lpo_matchmaker_saved_shuffled \
+    --output-path drugcomb_data/lpo/ \
+    --drug-features 0 \
+    --cell-line-features 0 \
+    --split-index 1
+```
+
+### Example: DrugComb with MoLFormer Embeddings (LDO Split, Replicate 5)
+
+```bash
+export TF_DETERMINISTIC_OPS=1
+python main.py \
+    --comb-data-path drugcomb_data/DrugComb.csv \
+    --cell-line-features-path drugcomb_data/cell_line_ohe.csv \
+    --drug1-features-path drugcomb_data/drug1_molformer.csv \
+    --drug2-features-path drugcomb_data/drug2_molformer.csv \
+    --train-test-mode 1 \
+    --train-ind drugcomb_data/splits/ldo/train_set_ldo \
+    --val-ind drugcomb_data/splits/ldo/val_set_ldo \
+    --test-ind drugcomb_data/splits/ldo/test_set_ldo \
+    --model-name drugcomb_data/ldo_matchmaker_saved_molformer \
+    --output-path drugcomb_data/ldo/ \
+    --drug-features 0 \
+    --cell-line-features 1 \
+    --split-index 5
 ```
 ### Example: NCI Almanac with One-Hot Encoded Features (LCO Split, Replicate 10)
 

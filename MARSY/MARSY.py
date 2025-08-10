@@ -13,7 +13,7 @@ from sklearn.metrics import mean_squared_error
 import numpy as np
 
 # Load main dataset
-data = pd.read_csv('/MARSY/data/feature_dataset.csv').to_numpy() #shuffled_feature_dataset.csv or molformer_dataset.csv
+data = pd.read_csv('/MARSY/data/feature_dataset.csv').to_numpy() #shuffled_feature_dataset.csv or molformer_dataset.csv or ohe_dataset.csv
 data_targets = pd.read_csv('/MARSY/data/data.csv')
 
 targets = data_targets[['Ri1', 'Ri2', 'Synergy_Zip']].to_numpy()
@@ -45,8 +45,8 @@ def data_preparation(X_train, X_test, pair_range):
     X_tst = []
     
     #Extract Pairs and Triples from the input vector of each sample
-    #Pairs refers to features of both drugs (3912 features)
-    #Triple refers to the features of both drugs and the cancer cell line (8551 features)
+    #Pairs refers to features of both drugs 
+    #Triple refers to the features of both drugs and the cancer cell line 
     pair = []
     for i in X_train:
         temp_pair = i[:pair_range]
@@ -115,8 +115,8 @@ def MARSY(X_tr, Y_tr, param):
 
 
 ### Parameters ###
-triple_length = 8551
-pair_length = 3912
+triple_length = 8551  # 1415 for OHE and 1611 for MoLFormer
+pair_length = 3912  # 1340 for OHE and 1536 for MoLFormer
 dropout_encoders = 0.2
 dropout_decoder = 0.5
 epochs = 200

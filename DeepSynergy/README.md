@@ -39,26 +39,33 @@ DeepSynergy was trained on the **O'Neil** dataset using **Leave-Pair-Out (LPO)**
 - **Cell Line Features**:
   - **Gene expression profiles**: 3984 genetic features.
 
-- You can download preprocessed data files from [here](https://drive.google.com/file/d/1c-2iriiLSkKdNZWj0kHfO3TljFuPF0wF/view?usp=sharing) (includes all drug and cell line features for DeepSynergy experiments).
+> **Note:** You can download [`X.p.gz`](https://huggingface.co/datasets/ebcandir/DeepSynergy/resolve/main/X.p.gz) and use `normalize.py` to produce processed input files for training.
 
 #### One-Hot Encoded Features
-- `OHEData/ohe_data_test_foldX_val_foldY.p`: Contains one-hot encoded representations for both drugs and cell lines.
-  - test_foldX indicates the test set fold.
-  - val_foldY indicates the validation set fold.
-> Note: You can generate `ohe_data_test_foldX_val_foldY.p` using the provided `generate_ohe_data.py` script under the `one_hot_encoded/`folder.
+- `OHEData/ohe_data_test_foldX_val_foldY.p`: Contains one-hot encoded representations for both drugs and cell lines.  
+  - `test_foldX` → test set fold  
+  - `val_foldY` → validation set fold  
+> **Note:** You can generate these files using the `generate_ohe_data.py` script under the `one_hot_encoded/` folder.
 
+#### Shuffled Features
+In this setting, both drug and cell line feature vectors are randomly permuted so that each drug or cell line is assigned the feature vector of another component.  
+> **Note:** You can download [`X_shuffled.p.gz`](https://huggingface.co/datasets/ebcandir/DeepSynergy/resolve/main/X_shuffled.p.gz`) and use `normalize.py` to produce processed input files for training.
+
+#### MoLFormer Embeddings
+Drugs are represented using pretrained **MoLFormer embeddings** obtained from their SMILES strings, while cell lines are represented using one-hot encoding. During normalization, only the drug features are normalized.  
+> **Note:** You can download [`X_molformer.p.gz`](https://huggingface.co/datasets/ebcandir/DeepSynergy/resolve/main/X_molformer.p.gz) and use `normalize_molformer.py` to produce processed input files for training.
 
 ---
-### Training DeepSynergy with Drug & Cell Line Features
 
+### Training DeepSynergy
 ```bash
 python deepsynergy.py
 ```
+Before training, set the `#data_file` variable in the script to the path of the processed input file corresponding to the feature type you want to use.  
 
-### Training DeepSynergy with One-Hot Encoded Features
-
+**Example:**  
 ```bash
-python deepsynergy_ohe.py
+data_file = '/DeepSynergy/ohe_data_test_fold0_val_fold1.p' 
 ```
 
 ## Reproducing Experiments
