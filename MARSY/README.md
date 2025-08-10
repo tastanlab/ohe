@@ -57,7 +57,7 @@ In this setting, both drug and cell line feature vectors are randomly permuted s
 
 #### MoLFormer Embeddings
 Drugs are represented using pretrained **MoLFormer embeddings** obtained from their SMILES strings, while cell lines are represented using one-hot encoding.  
-> **Note:** You can download [`molformer_dataset.csv`](https://huggingface.co/datasets/ebcandir/MARSY/resolve/main/molformer_dataset.csv) and use `normalize_molformer.py`  to use  as input file for training.
+> **Note:** You can download [`molformer_dataset.csv`](https://huggingface.co/datasets/ebcandir/MARSY/resolve/main/molformer_dataset.csv) to use  as input file for training.
 
 ---
 
