@@ -79,6 +79,7 @@ python training_GAT.py \
   --combination_file new_labels_0_10_deranged.csv \
   --drug1_features new_labels_0_10_deranged_drug1.pt \
   --drug2_features new_labels_0_10_deranged_drug2.pt
+```
 
 ### Training DeepDDS with One-Hot Encoded Features
 
