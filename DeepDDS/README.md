@@ -41,7 +41,7 @@ In one-hot encoded feature experiments, the molecular graph module and cell line
 - **Cell Line Features**:
   - **new_cell_features_954.csv**: Gene expression profiles filtered to 954 genetic features.
 
- You can generate input files using creat_data_DC.py or you can download preprocessed data files: `new_labels_0_10_drug1.pt` and `new_labels_0_10_drug2.pt` from [here](https://drive.google.com/file/d/1dFOCNqMIies-NTi56vBv2ZwreUo-Zf0p/view?usp=sharing). 
+ You can generate input files using creat_data_DC.py or you can download preprocessed data files: `new_labels_0_10_drug1.pt` from [here](https://huggingface.co/datasets/ebcandir/DeepDDS/resolve/main/new_labels_0_10_drug1.pt) and `new_labels_0_10_drug2.pt` from [here](https://huggingface.co/datasets/ebcandir/DeepDDS/resolve/main/new_labels_0_10_drug2.pt). 
 
 #### One-Hot Encoded Features
 - **Drug Features**:
@@ -54,13 +54,31 @@ In one-hot encoded feature experiments, the molecular graph module and cell line
 
 > Note: You can generate these three files using the provided `generate_ohe.py` script.
 
+## Shuffled Features
+In this setting, the **Combination Dataset** SMILES strings are randomly reassigned so that each drug is assigned a different SMILES than its original one. This breaks the true drug–feature associations while preserving the overall feature distribution.
+
+- **Shuffled Drug Features**: Molecular graphs are generated from the SMILES corresponding to the *newly assigned* drug indices in [`new_labels_0_10_deranged.csv`](https://huggingface.co/datasets/ebcandir/DeepDDS/resolve/main/new_labels_0_10_deranged.csv).  
+- **Shuffled Cell Line Features**: Cell line features are also randomly reassigned, as provided in [`remapped_cell_features.csv`](https://huggingface.co/datasets/ebcandir/DeepDDS/resolve/main/remapped_cell_features.csv).
+
+You can prepare the shuffled input files in two ways:  
+1. **Generate from scratch** using the provided [creat_data_DC.py](https://huggingface.co/datasets/ebcandir/DeepDDS/resolve/main/creat_data_DC.py) script.  
+2. **Use preprocessed files**:  
+   - [`new_labels_0_10_deranged_drug1.pt`](https://huggingface.co/datasets/ebcandir/DeepDDS/resolve/main/new_labels_0_10_deranged_drug1.pt)  
+   - [`new_labels_0_10_deranged_drug2.pt`](https://huggingface.co/datasets/ebcandir/DeepDDS/resolve/main/new_labels_0_10_deranged_drug2.pt)
 
 ---
-### Training DeepDDS with Drug & Cell Line Features
+### Training DeepDDS with Drug & Cell Line Features 
 
 ```bash
 python training_GAT.py
 ```
+
+You can run the shuffled setup using:  
+```bash
+python training_GAT.py \
+  --combination_file new_labels_0_10_deranged.csv \
+  --drug1_features new_labels_0_10_deranged_drug1.pt \
+  --drug2_features new_labels_0_10_deranged_drug2.pt
 
 ### Training DeepDDS with One-Hot Encoded Features
 
