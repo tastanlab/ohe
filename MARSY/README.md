@@ -44,25 +44,42 @@ Split files are located in:
   After concatenating all features, the final vector length for each instance is:  
   `978 (Drug1_PC3) + 978 (Drug1_MCF7) + 978 (Drug2_PC3) + 978 (Drug2_MCF7) + 4639 (Cell Line) = 8551`.
 
+> **Note:** You can download [`feature_dataset.csv`](https://huggingface.co/datasets/ebcandir/MARSY/resolve/main/feature_dataset.csv) to use  as input file for training.
   
 #### One-Hot Encoded Features
 - **`ohe_dataset.csv`**: Contains one-hot encoded representations for both drugs and cell lines.
 
-> Note: You can generate `ohe_dataset.csv` using the provided `generate_ohe_data.py` script or download it directly [here](https://drive.google.com/file/d/1vElNqjcgs2Fic9lfCLAdXNchziUGQzuc/view?usp=sharing).
+> **Note:** You can generate `ohe_dataset.csv` using the provided `generate_ohe_data.py` script or download it directly [here](https://huggingface.co/datasets/ebcandir/MARSY/resolve/main/ohe_dataset.csv) to use  as input file for training.
 
+#### Shuffled Features
+In this setting, both drug and cell line feature vectors are randomly permuted so that each drug or cell line is assigned the feature vector of another component.  
+> **Note:** You can download [`shuffled_feature_dataset.csv`](https://huggingface.co/datasets/ebcandir/MARSY/resolve/main/shuffled_feature_dataset.csv) to use  as input file for training.
+
+#### MoLFormer Embeddings
+Drugs are represented using pretrained **MoLFormer embeddings** obtained from their SMILES strings, while cell lines are represented using one-hot encoding.  
+> **Note:** You can download [`molformer_dataset.csv`](https://huggingface.co/datasets/ebcandir/MARSY/resolve/main/molformer_dataset.csv) and use `normalize_molformer.py`  to use  as input file for training.
 
 ---
-### Training MARSY with Drug & Cell Line Features
+
+### Training MARSY 
 
 ```bash
 python MARSY.py
 ```
 
-### Training MARSY with One-Hot Encoded Features
-
+- Set the data variable to the path of the feature file you want to use.
+Example:
 ```bash
-python MARSY_ohe.py
+data = "ohe_dataset.csv"
 ```
+
+Assign `triple_length` and `pair_length` based on the selected feature type:
+
+| Feature Type                                   | triple_length | pair_length |
+|-----------------------------------------------|---------------|-------------|
+| Drug & Cell Line Features / Shuffled Features | 8551          | 3912        |
+| One-Hot Encoded (OHE) Features                 | 1415          | 1340        |
+| MoLFormer Features                             | 1611          | 1536        |
 
 
 ## Reproducing Experiments
