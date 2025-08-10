@@ -1,6 +1,6 @@
 ## **One-Hot News: Drug Synergy Models Shortcut Molecular Features**
 ## Overview
-This repository contains the code and data supporting our study, "One-Hot News: Drug Synergy Models Shortcut Molecular Features". Our work reveals that drug synergy prediction models, instead of leveraging meaningful chemical or biological features, often learn shortcuts based on co-variation patterns in the dataset. By replacing rich molecular representations with simple one-hot encoded identifiers, we demonstrate that models can achieve comparable or even slightly improved performance—highlighting fundamental generalization issues in current deep learning approaches for drug synergy prediction.
+This repository contains the code and data supporting our study, "One-Hot News: Drug Synergy Models Shortcut Molecular Features". Our work reveals that drug synergy prediction models, instead of leveraging meaningful chemical or biological features, often learn shortcuts based on co-variation patterns in the dataset. By replacing rich molecular representations with simple one-hot encoded identifiers, we demonstrate that models can achieve comparable or even slightly improved performance, highlighting fundamental generalisation issues in current deep learning approaches for drug synergy prediction.
 
 ---
 
