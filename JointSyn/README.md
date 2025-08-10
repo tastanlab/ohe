@@ -31,8 +31,6 @@ JointSyn was trained on a **subset of the O’Neil dataset**, as detailed in its
 
 For training, **Leave-Triple-Out (LTO) splitting** was applied, following the methodology provided by the authors. Each fold was repeated across **10 different replicates**, ensuring robustness in the evaluation.
 
-> ⚠ **Note**: Due to compatibility issues with the required libraries and the CUDA version on our cluster, we were unable to train JointSyn using the original drug and cell line features. Instead, we report the results provided in the original JointSyn paper.
-
 ---
 
 In one-hot encoded feature experiments, the graph-based components of the original architecture were removed. One-hot encoded features were directly provided as input, as shown in **Figure 2**:
@@ -47,14 +45,50 @@ In one-hot encoded feature experiments, the graph-based components of the origin
 
 #### Combination Dataset
 - **`data_to_split.csv`**:  Available under the `rawData/` folder. Contains drug pair and cell line combination information with synergy Loewe scores.
+Assign to variable: `data`
+  
+#### Drug & Cell Line Features
+- **Drug Features**:
+  - Download [Drug_use.csv](https://huggingface.co/datasets/ebcandir/JointSyn/resolve/main/jointsyn_data/Drug_use.csv)
+    Assign to variable: `drug_fp` 
+- **Cell Line Features**:
+  - Download [Cell_use.csv](https://huggingface.co/datasets/ebcandir/JointSyn/resolve/main/jointsyn_data/Cell_use.csv)
+  Assign to variable: `cell`
+- **Pair Graph**:
+  - Download [Pair_graph.npy](https://huggingface.co/datasets/ebcandir/JointSyn/resolve/main/jointsyn_data/Pair_graph.npy)
+  Assign to variable: `pair_graph` 
 
 #### One-Hot Encoded Features
 - **Drug Features**:
 - `ohe_drug.csv`: Available under the `rawData/` folder. One-hot encoded representation for drugs.
+Assign to variable: `drug_fp`
 - **Cell Line Features**:
 - `ohe_cell.csv`: Available under the `rawData/` folder. One-hot encoded representation for cell lines.
+Assign to variable: `cell`
 
+#### Shuffled Features
+- **Drug Features**:
+  - Download [Drug_use_shuffled.csv](https://huggingface.co/datasets/ebcandir/JointSyn/resolve/main/shuffled_data/Drug_use_shuffled.csv) 
+  Assign to variable: `drug_fp` 
+- **Cell Line Features**:
+  - Download [Cell_use_shuffled.csv](https://huggingface.co/datasets/ebcandir/JointSyn/resolve/main/shuffled_data/Cell_use_shuffled.csv) 
+  Assign to variable: `cell`
+- **Pair Graph**:
+  - Download [Pair_graph_shuffled.npy](https://huggingface.co/datasets/ebcandir/JointSyn/resolve/main/shuffled_data/Pair_graph_shuffled.npy)
+  Assign to variable: `pair_graph` 
 ---
+#### Splited Data 
+
+This [folder](https://huggingface.co/datasets/ebcandir/JointSyn/tree/main/split_data) contains pre-split training, validation, and test datasets.
+You can download and directly use these files to train models.
+
+### Training JointSyn with Drug & Cell Line Features and Shuffled Features
+
+```bash
+python main.py
+```
+For Drug & Cell Line Features, use their corresponding files.
+For Shuffled Features, use the shuffled versions of the files.
 
 ### Training JointSyn with One-Hot Encoded Features
 
@@ -64,6 +98,13 @@ python main_ohe.py
 
 
 ## Reproducing Experiments
+> JointSyn uses graph libraries that conflict with packages in other models.
+Please create and use a separate conda environment for JointSyn.
+
+```bash
+conda env create -f JointSyn/environment.yml
+conda activate jointSyn
+```
 
 For further details on the JointSyn framework, original dataset or dataset preparation, visit the official JointSyn [GitHub repository](https://github.com/LiHongCSBLab/JointSyn)
 
