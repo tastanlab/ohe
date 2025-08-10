@@ -1,27 +1,17 @@
-"""import pandas as pd
-import numpy as np
-import pickle
-import gzip
-
-
-
-data_file = '/DeepSynergy/data_test_fold0_tanh.p.gz' # pickle file which contains the data (produced with normalize.ipynb)
-
-
-
-file = gzip.open(data_file, 'rb')
-X_tr, X_val, X_train, X_test, y_tr, y_val, y_train, y_test = pickle.load(file)
-file.close()
-
-print(len(X_test[0]))"""
-
 import numpy as np
 import pandas as pd
 import pickle 
 import gzip
+import argparse
+
+
+parser = argparse.ArgumentParser(description='REQUEST REQUIRED PARAMETERS')
+parser.add_argument('--feature_file', default="X.p.gz")
+args = parser.parse_args()
 
 # in this example tanh normalization is used
 # fold 0 is used for testing and fold 1 for validation (hyperparamter selection)
+
 
 def normalize(X, means1=None, std1=None, means2=None, std2=None, feat_filt=None, norm='tanh_norm'):
     if std1 is None:
@@ -49,7 +39,7 @@ def normalize(X, means1=None, std1=None, means2=None, std2=None, feat_filt=None,
     #contains the data in both feature ordering ways (drug A - drug B - cell line and drug B - drug A - cell line)
 #in the first half of the data the features are ordered (drug A - drug B - cell line)
 #in the second half of the data the features are ordered (drug B - drug A - cell line)
-file = gzip.open('X.p.gz', 'rb')
+file = gzip.open(args.feature_file, 'rb')
 X = pickle.load(file)
 file.close()
 
