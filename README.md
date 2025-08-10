@@ -1,6 +1,6 @@
-## **One-Hot News: Drug Synergy Models Take a Shortcut**
+## **One-Hot News: Drug Synergy Models Shortcut Molecular Features**
 ## Overview
-This repository contains the code and data supporting our study, "One-Hot News: Drug Synergy Models Take a Shortcut". Our work reveals that drug synergy prediction models, instead of leveraging meaningful chemical or biological features, often learn shortcuts based on co-variation patterns in the dataset. By replacing rich molecular representations with simple one-hot encoded identifiers, we demonstrate that models can achieve comparable or even slightly improved performance—highlighting fundamental generalization issues in current deep learning approaches for drug synergy prediction.
+This repository contains the code and data supporting our study, "One-Hot News: Drug Synergy Models Shortcut Molecular Features". Our work reveals that drug synergy prediction models, instead of leveraging meaningful chemical or biological features, often learn shortcuts based on co-variation patterns in the dataset. By replacing rich molecular representations with simple one-hot encoded identifiers, we demonstrate that models can achieve comparable or even slightly improved performance—highlighting fundamental generalization issues in current deep learning approaches for drug synergy prediction.
 
 ---
 
@@ -29,12 +29,22 @@ To compare their ability to capture information from drug and cell line features
 - **MARSY**
 - **JointSyn**
 
-#### Approach
-1. Reproduced each model using their **original hyperparameters**, **datasets**, and **splitting methods**.
-2. Replaced original features with **one-hot-encoded features** to test their learning performance.
+## Approach
+1. Reproduced each model with its **original hyperparameters**, **datasets**, and **split strategies**.
+2. Replaced original drug/cell features with **one-hot encodings (OHE)** to test learning from entity identity.
+3. Evaluated **four average-based baselines**:
+   - **Overall Average:** predict the global mean for all test samples.
+   - **Drug-Pair Average:** if the exact drug pair appears in training, use its mean; otherwise use the overall mean.
+   - **Cell-Line Average:** if the test cell line appears in training, use its mean; otherwise use the overall mean.
+   - **Cell-Line & ≥1-Drug Average:** if the test cell line and at least one of its drugs appear together in training, use that mean; otherwise use the overall mean.  
+   *In the result table, only the best-performing variant among these is reported as **Best Average**.*
+4. Included a **Shuffled Features** control: randomly permuted drug and cell-line feature vectors across samples, preserving marginal feature distributions but breaking entity-specific associations.
+5. Considered **MoLFormer (pretrained drug embeddings)**: each drug encoded from its SMILES using the pretrained *MoLFormer-XL-both-10pct* model. Cell lines remain **one-hot**.
+6. All settings were trained and evaluated under the same split protocols as the original works, with results reported using the original metrics.
+
 
 ![Model Performance Comparison](figures/OHE.jpg)
-*Figure 2: Comparison of Drug \& Cell Line Features vs OHE Representations Across Different Models and Datasets.*
+*Figure 2: Performance of models with original features, one-hot encoding (OHE), shuffled features, MoLFormer embeddings, and the Best Average baseline across datasets, split methods, and metrics.*
 
 ---
 
