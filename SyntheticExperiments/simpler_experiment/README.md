@@ -29,9 +29,9 @@ With `generate_dataset.py`, you can create the following datasets:
 ### Preprocessed Files
 You can download all preprocessed files from:  
 - **All experiments:**  
-  https://huggingface.co/datasets/ebcandir/synthetic_experiments/tree/main/simple_experiment
+  [Link](https://huggingface.co/datasets/ebcandir/synthetic_experiments/tree/main/simple_experiment)
 - **Non-repeated dataset:**  
-  https://huggingface.co/datasets/ebcandir/synthetic_experiments/tree/main/simple_experiment/non_repeated
+  [Link](https://huggingface.co/datasets/ebcandir/synthetic_experiments/tree/main/simple_experiment/non_repeated)
 
 ### Training / Evaluation (main.py)
 
