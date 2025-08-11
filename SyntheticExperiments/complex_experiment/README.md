@@ -21,9 +21,9 @@ Use `generate_score.py` to produce **non-linear** scores for either the **repeat
 ### Preprocessed Files
 You can download all preprocessed files from:  
 - **All experiments:**  
-  https://huggingface.co/datasets/ebcandir/synthetic_experiments/tree/main/complex_experiment  
+  [Link](https://huggingface.co/datasets/ebcandir/synthetic_experiments/tree/main/complex_experiment)
 - **Non-repeated dataset:**  
-  https://huggingface.co/datasets/ebcandir/synthetic_experiments/tree/main/complex_experiment/non_repeated
+  [Link](https://huggingface.co/datasets/ebcandir/synthetic_experiments/tree/main/complex_experiment/non_repeated)
 
 ### Training / Evaluation (main.py)
 
